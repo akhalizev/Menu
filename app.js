@@ -76,11 +76,33 @@ const menu = [
 const sectionCenter = document.querySelector('.section-center');
 //console.log(sectionCenter);
 
+const filterBtns = document.querySelectorAll('.filter-btn');
+
+//load items
 window.addEventListener('DOMContentLoaded', function () {
-  displayMenu(menu);
+  displayMenuItems(menu);
 });
 
-function displayMenu(menuItems) {
+//filter items
+filterBtns.forEach(function (btn) {
+  btn.addEventListener('click', function (e) {
+    const category = e.currentTarget.dataset.id;
+    const menuCategory = menu.filter(function (menuItem) {
+      if (menuItem.category === category) {
+        return menuItem;
+      }
+      });
+      if (category === 'all') {
+        displayMenuItems(menu);
+      } else {
+        displayMenuItems(menuCategory);
+      }
+    
+    //console.log(menuCategory);
+  })
+})
+
+function displayMenuItems(menuItems) {
   let displayMenu = menuItems.map(function (item) {
     //console.log(item);
     return `<article class="menu-item">
@@ -96,5 +118,5 @@ function displayMenu(menuItems) {
   });
   displayMenu = displayMenu.join('');
   sectionCenter.innerHTML = displayMenu;
-  console.log(displayMenu);
-}
+  //console.log(displayMenu);
+};
